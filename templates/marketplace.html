@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="glass card">
+  <h2>Property Registry / Marketplace</h2>
+  <form method="get" class="filters">
+    <input name="city" placeholder="Filter by City" value="{{ filters.city }}">
+    <select name="zone">
+      <option value="">Filter by Zone</option>
+      <option value="Residential" {% if filters.zone=='Residential' %}selected{% endif %}>Residential</option>
+      <option value="Commercial" {% if filters.zone=='Commercial' %}selected{% endif %}>Commercial</option>
+    </select>
+    <input type="number" name="min_price" placeholder="Min Price" value="{{ filters.min_price }}">
+    <input type="number" name="max_price" placeholder="Max Price" value="{{ filters.max_price }}">
+    <input type="number" name="min_size" placeholder="Min Size sqft" value="{{ filters.min_size }}">
+    <button type="submit">Apply</button>
+  </form>
+</section>
+
+<div class="grid cards">
+  {% for p in properties %}
+  <article class="glass card">
+    <h3>{{ p.title }}</h3>
+    <p>Size: {{ p.area_sqft }} sq ft</p>
+    <p>Zone: {{ p.zone }}</p>
+    <p>Owner: {{ p.owner_wallet[:8] }}...</p>
+    <p>Price: ₹{{ '{:,}'.format(p.price) }}</p>
+    <a class="button-link" href="{{ url_for('property_detail', property_id=p.property_id) }}">View Details</a>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

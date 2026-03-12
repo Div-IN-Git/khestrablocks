@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LandChain</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="bg"></div>
+  <nav class="nav glass">
+    <a href="{{ url_for('index') }}">LandChain</a>
+    <div>
+      <a href="{{ url_for('marketplace') }}">Marketplace</a>
+      <a href="{{ url_for('ledger') }}">Blockchain Explorer</a>
+      <a href="{{ url_for('government_dashboard') }}">Government Node</a>
+      {% if session.get('user_email') %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="glass flash-wrap">
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="glass card">
+  <h2>Government Authority Dashboard (Proof of Authority)</h2>
+  <h3>Pending Property Registrations</h3>
+  {% for p in pending_props %}
+  <div class="ledger-row">
+    <p>{{ p.property_id }} - {{ p.title }} ({{ p.city }})</p>
+    <form method="post" action="{{ url_for('approve_property', property_id=p.property_id) }}">
+      <button type="submit">Approve Registration</button>
+    </form>
+  </div>
+  {% else %}<p>No pending registrations.</p>{% endfor %}
+
+  <h3>Pending Ownership Transfers</h3>
+  {% for tx in pending_tx %}
+  <p>{{ tx.property_id }} from {{ tx.from_wallet }} to {{ tx.to_wallet }} ({{ tx.status }})</p>
+  {% else %}<p>No pending transfers.</p>{% endfor %}
+</section>
+{% endblock %}

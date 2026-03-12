@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="glass card">
+  {% if block %}
+  <h2>Block #{{ block.block_index }}</h2>
+  <p>Property ID: {{ block.property_id }}</p>
+  <p>From: {{ block.from_wallet }}</p>
+  <p>To: {{ block.to_wallet }}</p>
+  <p>Timestamp: {{ block.timestamp }}</p>
+  <p>Hash: {{ block.hash }}</p>
+  <p>Previous Hash: {{ block.previous_hash }}</p>
+  <p>Sale Agreement: {{ block.sale_agreement }}</p>
+  {% else %}
+  <p>Block not found.</p>
+  {% endif %}
+</section>
+{% endblock %}

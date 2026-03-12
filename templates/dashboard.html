@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid two-col">
+  <section class="glass card">
+    <h2>Hello, {{ user.name }}</h2>
+    <p>Email: {{ user.email }}</p>
+    <h3>Identity Verification</h3>
+    <form method="post" action="{{ url_for('verify_identity') }}" enctype="multipart/form-data">
+      <label>Upload Aadhaar Card</label><input type="file" name="aadhaar" required>
+      <label>Upload Government ID</label><input type="file" name="gov_id" required>
+      <label>Upload Property Documents</label><input type="file" name="property_doc" required>
+      <button type="submit">Submit Verification</button>
+    </form>
+    {% if user.identity_verified %}<p class="ok">✅ Government Identity Verified</p>{% endif %}
+  </section>
+
+  <section class="glass card">
+    <h3>Wallet Generation</h3>
+    <form method="post" action="{{ url_for('generate_wallet') }}">
+      <button type="submit">Generate Wallet</button>
+    </form>
+    {% if user.wallet_address %}
+    <p><strong>Wallet Generated</strong></p>
+    <p>Public Key: {{ user.public_key }}</p>
+    <p>Private Key: **************{{ user.private_key[-6:] }}</p>
+    <p>Wallet Address: {{ user.wallet_address }}</p>
+    {% endif %}
+
+    <h3>Register Property</h3>
+    <form method="post" action="{{ url_for('register_property') }}">
+      <input type="text" name="title" placeholder="Property Title" required>
+      <input type="text" name="city" placeholder="City" required>
+      <select name="zone"><option>Residential</option><option>Commercial</option></select>
+      <input type="number" name="area_sqft" placeholder="Area sqft" required>
+      <input type="number" name="price" placeholder="Price" required>
+      <button type="submit">Submit for Approval</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="glass card">
+  <h2>Blockchain Explorer</h2>
+  {% for block in blocks %}
+  <article class="ledger-row">
+    <div>
+      <strong>Block {{ block.block_index }}</strong>
+      <p>Property ID: {{ block.property_id }}</p>
+      <p>From: {{ block.from_wallet[:12] }}... | To: {{ block.to_wallet[:12] }}...</p>
+      <p>Hash: {{ block.hash[:18] }}... | Previous: {{ block.previous_hash[:18] }}...</p>
+    </div>
+    <a class="button-link" href="{{ url_for('ledger_block', block_index=block.block_index) }}">Details</a>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="glass card">
+  <h2>{{ property.title }}</h2>
+  <div class="grid two-col">
+    <div>
+      <h3>Property Info</h3>
+      <p>Property ID: {{ property.property_id }}</p>
+      <p>Zone: {{ property.zone }}</p>
+      <p>Area: {{ property.area_sqft }} sq ft</p>
+      <p>Location: {{ property.city }}</p>
+      <p>Price: ₹{{ '{:,}'.format(property.price) }}</p>
+    </div>
+    <div>
+      <h3>Documents</h3>
+      <p>Sale Deed: {{ property.sale_deed }}</p>
+      <p>Tax Certificate: {{ property.tax_certificate }}</p>
+      <h3>Owner Wallet</h3>
+      <p>{{ property.owner_wallet }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="glass card">
+  <h3>Transfer Ownership</h3>
+  {% if user %}
+  <form method="post" action="{{ url_for('transfer_property', property_id=property.property_id) }}" enctype="multipart/form-data">
+    <input type="text" name="buyer_wallet" placeholder="Enter Buyer Wallet Address" required>
+    <label>Upload Sale Agreement</label>
+    <input type="file" name="sale_agreement" required>
+    <button type="submit">Confirm Transaction</button>
+  </form>
+  {% else %}
+  <p>Please login to transfer ownership.</p>
+  {% endif %}
+</section>
+
+<section class="glass card">
+  <h3>Ownership History</h3>
+  {% for block in history %}
+  <p>Block #{{ block.block_index }}: {{ block.from_wallet[:8] }}... → {{ block.to_wallet[:8] }}...</p>
+  {% endfor %}
+</section>
+{% endblock %}
