@@ -1,7 +1,7 @@
 import os
 import sqlite3
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "landchain.db")
+DB_PATH = "/tmp/landchain.db"
 
 
 def get_db_connection():
