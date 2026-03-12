@@ -9,7 +9,7 @@ from db import get_db_connection, init_db
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "landchain-secret-key")
-app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(__file__), "uploads")
+app.config["UPLOAD_FOLDER"] = "/tmp/uploads"
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 
